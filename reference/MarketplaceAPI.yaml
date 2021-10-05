@@ -1,0 +1,306 @@
+openapi: 3.1.0
+info:
+  title: MarketplaceAPI
+  version: '1.0'
+  summary: This API is for a tori type marketplace
+  description: This API is for a tori type marketplace
+  contact:
+    name: tomi
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /users:
+    post:
+      summary: Create new user
+      operationId: post-users
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+      description: This endpoint is used to create new users to the system
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Username:
+                  type: string
+                Password:
+                  type: string
+              required:
+                - Username
+                - Password
+            examples:
+              example-1:
+                value:
+                  Username: User1
+                  Password: pas$w0rd
+  /items:
+    get:
+      summary: Gets all item listings
+      tags: []
+      operationId: get-items
+      description: This endpoint is used to get all the items listed as json
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/itemlisting'
+    post:
+      summary: Create new listing
+      operationId: post-items
+      responses:
+        '201':
+          description: Created
+      description: This endpoint allows logged in user to create a listing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Title:
+                  type: string
+                Description:
+                  type: string
+                Category:
+                  type: string
+                Location:
+                  type: string
+                Images:
+                  type: array
+                  items: {}
+                PostDate:
+                  type: string
+                AskPrice:
+                  type: string
+                Delivery:
+                  type: string
+                SellerEmail:
+                  type: string
+                SellerPhone:
+                  type: string
+                Username:
+                  type: string
+              required:
+                - Title
+                - Description
+                - Category
+                - Location
+                - Images
+                - PostDate
+                - AskPrice
+                - Delivery
+                - SellerEmail
+                - SellerPhone
+                - Username
+            examples:
+              example-1:
+                value:
+                  Title: string
+                  Description: string
+                  Category: string
+                  Location: string
+                  Images:
+                    - null
+                  PostDate: string
+                  AskPrice: string
+                  Delivery: string
+                  SellerEmail: string
+                  SellerPhone: string
+                  Username: string
+      security:
+        - HTTPBasic: []
+    parameters: []
+  /users/login:
+    post:
+      summary: ''
+      operationId: post-users-login
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: User Not Found
+        '500':
+          description: Internal Server Error
+      description: This is used to login to the api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Username:
+                  type: string
+                Password:
+                  type: string
+              required:
+                - Username
+                - Password
+            examples:
+              example-1:
+                value:
+                  Username: User1
+                  Password: some_pass_word
+      security:
+        - HTTPBasic: []
+  /items/category:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/itemlisting'
+      operationId: get-items-category
+      description: This endpoint gets the items listed in a certain category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Category:
+                  type: string
+              required:
+                - Category
+            examples:
+              example-1:
+                value:
+                  Category: Cars
+  /items/location:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/itemlisting'
+      operationId: get-items-location
+      description: This endpoint gets the items in a certain location/area
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Location:
+                  type: string
+              required:
+                - Location
+            examples:
+              example-1:
+                value:
+                  Location: Oulu
+  /items/postdate:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/itemlisting'
+      operationId: get-items-postdate
+      description: This endpoint gets the items with date of posting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                PostDate:
+                  type: string
+              required:
+                - PostDate
+            examples:
+              example-1:
+                value:
+                  PostDate: 5.10.2021
+  '/items/:id':
+    delete:
+      summary: Delete a specific item listing
+      operationId: 'delete-items-:id'
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+      description: This endpoint allows you to delete item based on item id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+            examples: {}
+      security:
+        - HTTPBasic: []
+    put:
+      summary: Modify a specific listing
+      operationId: 'put-items-:id'
+      responses:
+        '200':
+          description: OK
+      description: 'This endpoint allows you to modify item listing with id '
+      parameters: []
+      security:
+        - HTTPBasic: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/itemlisting'
+components:
+  schemas:
+    itemlisting:
+      title: itemlisting
+      type: object
+      examples:
+        - id: item id
+          Title: item title
+          Description: item description
+          Category: item category
+          PostDate: item post date
+          Location: item location
+          Username: seller username
+          SellerEmail: seller email
+          SellerPhone: seller phone number
+      properties:
+        id:
+          type: string
+        Title:
+          type: string
+        Description:
+          type: string
+        Category:
+          type: string
+        PostDate:
+          type: string
+        Location:
+          type: string
+        Username:
+          type: string
+        SellerEmail:
+          type: string
+        SellerPhone:
+          type: string
+  securitySchemes:
+    HTTPBasic:
+      type: http
+      scheme: basic
