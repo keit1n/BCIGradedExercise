@@ -44,7 +44,7 @@ paths:
       summary: Gets all item listings
       tags: []
       operationId: get-items
-      description: This endpoint is used to get all the items listed as json
+      description: This endpoint is used to get all the items listed as json.
       responses:
         '200':
           description: OK
