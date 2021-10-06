@@ -7,7 +7,7 @@ const saltRounds = 10;
 const myPlaintextPassword = 's0/\/\P4$$w0rD';
 const someOtherPlaintextPassword = 'not_bacon';
 const upload = multer({ dest: 'uploads/' })
-const port = 3000
+//const port = 3000
 const app = express()
 
 app.use(bodyParser.json());
@@ -28,16 +28,14 @@ var items = [
   { id: uuidv4(), Title: 'Silver dollar', Description: 'Title says it all a silver dollar from 1886', Category: 'Collectibles', PostDate: '4.10.2021', Location: 'Kerava'}
 ];
 
-//app.set('port', (process.env.PORT || 80));
+app.set('port', (process.env.PORT || 80));
 
 // start listening for incoming HTTP connections
-/*app.listen(app.get('port'), function() {
+app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
-*/
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
+
+
 app.get('/users', (req, res) => {
     console.log(users);
     res.json(users);
