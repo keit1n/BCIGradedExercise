@@ -264,7 +264,12 @@ paths:
         '200':
           description: OK
       description: 'This endpoint allows you to modify item listing with id '
-      parameters: []
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: token
+          description: hash token to confirm login
       security:
         - HTTPBasic: []
       requestBody:
