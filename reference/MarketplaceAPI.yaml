@@ -251,6 +251,12 @@ paths:
             examples: {}
       security:
         - HTTPBasic: []
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: token
+          description: hash token used to confirm login
     put:
       summary: Modify a specific listing
       operationId: 'put-items-:id'
